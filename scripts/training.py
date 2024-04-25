@@ -14,7 +14,7 @@ from keras.optimizers import SGD
 
 lemmatizer = WordNetLemmatizer()
 
-DIRNAME = '\\'.join(os.path.dirname(__file__).split("/"))
+DIRNAME = '\\'.join(os.path.dirname(__file__).split("\\"))
 intents = json.loads(open(os.path.join(DIRNAME, 'intents.json')).read())
 
 words = []
