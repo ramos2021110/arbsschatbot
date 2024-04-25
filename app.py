@@ -23,7 +23,7 @@ app = Flask(__name__, template_folder="template")
 app.config['SECRET'] = "secret!123"
 
 # Read the PORT environment variable or default to port 3000
-port = int(os.environ.get('PORT', 3000))
+
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 @socketio.on('message')
@@ -69,4 +69,4 @@ def index():
 
 if __name__ == '__main__':
     # Run the Flask app with SocketIO support
-    socketio.run(app, host="0.0.0.0", port=port, debug=True)
+    socketio.run(app)
