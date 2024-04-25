@@ -9,12 +9,12 @@ import nltk
 from nltk.stem import WordNetLemmatizer
 
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
+from keras.layers import Dense, Activation, Dropout, Input # Import Input layer
 from keras.optimizers import SGD
 
 lemmatizer = WordNetLemmatizer()
 
-DIRNAME = '\\'.join(os.path.dirname(__file__).split("\\"))
+DIRNAME = os.path.dirname(os.path.abspath(__file__))
 intents = json.loads(open(os.path.join(DIRNAME, 'intents.json')).read())
 
 words = []
@@ -58,12 +58,15 @@ training = np.array(training)
 trainX = training[:, :len(words)]
 trainY = training[:, len(words):]
 
-model = Sequential()
-model.add(Dense(128, input_shape=(len(trainX[0]),), activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(len(trainY[0]), activation='softmax'))
+# Define the model
+model = Sequential([
+    Input(shape=(len(trainX[0]),)), # Add Input layer with input_shape
+    Dense(128, activation='relu'),
+    Dropout(0.5),
+    Dense(64, activation='relu'),
+    Dropout(0.5),
+    Dense(len(trainY[0]), activation='softmax')
+])
 
 sgd = SGD(learning_rate=0.001, momentum=0.9, nesterov=True)
 model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
