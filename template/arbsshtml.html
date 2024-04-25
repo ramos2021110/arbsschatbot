@@ -1,24 +1,16 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
-  <head>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8sDF4Gb5+76mJK5t4KpjgHXk6Vx7s3NFMWVk6YuG07Cx5tSyB" crossorigin="anonymous"> -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CEUMKT- Arbss the Chatbot</title> <!-- SELF EXPLANATORY  -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEUMKT- Arbss the Chatbot</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/MutationObserver.js/0.2.8/mutationobserver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/1.3.1/forge.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
-    
-    
-    
     <link rel="stylesheet" href="../static/arbsscss.css"/>
     <link rel="icon" type="image/x-icon" href="../static/images/arbssidle.gif" sizes="32x32">
-  </head>
+</head>
 
   <body>
     <div class="wholecontent" id = "wholecontent">            
@@ -105,58 +97,65 @@
     <script type="text/javascript">
       // import { homedisabler } from '../static/arbssjs.js';
       $(document).ready(function() {
-          var socket = io.connect("https://arbsschat.onrender.com");
+        var socket = io.connect("https://arbsschat.onrender.com/socket.io/");
 
-          socket.on('message', function(data) {
-              $('#user-input').append($('<p>').text(data))
-          });
+socket.on('arby_answers', function(data) {
+    $('#user-input').append($('<p>').text(data.message))
+});
 
-          let pbkeys = document.getElementById('pbkeys').value;
-          // let pbkeysn = pbkeys.replace(" ", "\n")
-          $('#user-input').keypress(function (event) {
-            var key = event.which;
-            if (key == 13) {
-                    let userInput = $('#user-input').val()
-                    if(userInput.length>185){
-                      let string1 = userInput.slice(0, 150);
-                      let string2 = userInput.slice(150, userInput.length-1);
-                      console.log(pbkeys);
-                      let rsa = forge.pki.rsa;
-                      let publicKey = forge.pki.publicKeyFromPem(pbkeys);
-                      let userMessage1 = string1;
-                      let userMessage2 = string2;
-                      console.log(userMessage1);
-                      let encrypted1 = publicKey.encrypt(userMessage1, 'RSA-OAEP', {
-                                        md: forge.md.sha256.create(),
-                                        mgf1: forge.mgf1.create()
-                                      })
-                      console.log(encrypted1);
-                      let encrypted2 = publicKey.encrypt(userMessage2, 'RSA-OAEP', {
-                                        md: forge.md.sha256.create(),
-                                        mgf1: forge.mgf1.create()
-                                      })
-                      console.log(encrypted2);
-                      let pki = forge.pki;
-                      let send1 = forge.util.encode64(encrypted1);
-                      let send2 = forge.util.encode64(encrypted2);
-                      socket.send({twoparts: true, userMessageP1: send1, userMessageP2: send2});
-                    } else {
-                      console.log(pbkeys);
-                      let rsa = forge.pki.rsa;
-                      let publicKey = forge.pki.publicKeyFromPem(pbkeys);
-                      let userMessage = userInput;
-                      console.log(userMessage);
-                      let encrypted = publicKey.encrypt(userMessage, 'RSA-OAEP', {
-                                        md: forge.md.sha256.create(),
-                                        mgf1: forge.mgf1.create()
-                                      })
-                      console.log(encrypted);
-                      let pki = forge.pki;
-                      let send = forge.util.encode64(encrypted);
-                      socket.send({twoparts: false, userMessage: send});
-                    };
-              $('#user-input').val('');
-              console.log("Went here after enter");
+let pbkeys = document.getElementById('pbkeys').value;
+// let pbkeysn = pbkeys.replace(" ", "\n")
+$('#user-input').keypress(function(event) {
+    var key = event.which;
+    if (key == 13) {
+        let userInput = $('#user-input').val()
+        if (userInput.length > 185) {
+            let string1 = userInput.slice(0, 150);
+            let string2 = userInput.slice(150);
+            console.log(pbkeys);
+            let rsa = forge.pki.rsa;
+            let publicKey = forge.pki.publicKeyFromPem(pbkeys);
+            let userMessage1 = string1;
+            let userMessage2 = string2;
+            console.log(userMessage1);
+            let encrypted1 = publicKey.encrypt(userMessage1, 'RSA-OAEP', {
+                md: forge.md.sha256.create(),
+                mgf1: forge.mgf1.create()
+            })
+            console.log(encrypted1);
+            let encrypted2 = publicKey.encrypt(userMessage2, 'RSA-OAEP', {
+                md: forge.md.sha256.create(),
+                mgf1: forge.mgf1.create()
+            })
+            console.log(encrypted2);
+            let pki = forge.pki;
+            let send1 = forge.util.encode64(encrypted1);
+            let send2 = forge.util.encode64(encrypted2);
+            socket.send({
+                twoparts: true,
+                userMessageP1: send1,
+                userMessageP2: send2
+            });
+        } else {
+            console.log(pbkeys);
+            let rsa = forge.pki.rsa;
+            let publicKey = forge.pki.publicKeyFromPem(pbkeys);
+            let userMessage = userInput;
+            console.log(userMessage);
+            let encrypted = publicKey.encrypt(userMessage, 'RSA-OAEP', {
+                md: forge.md.sha256.create(),
+                mgf1: forge.mgf1.create()
+            })
+            console.log(encrypted);
+            let pki = forge.pki;
+            let send = forge.util.encode64(encrypted);
+            socket.send({
+                twoparts: false,
+                userMessage: send
+            });
+        };
+        $('#user-input').val('');
+        console.log("Went here after enter");
             }
           });
 
