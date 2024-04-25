@@ -1,7 +1,6 @@
-import os
 import json
 from flask import Flask, render_template
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, send, emit
 from markupsafe import Markup
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
@@ -9,8 +8,6 @@ from Crypto.Hash import SHA256
 from Crypto import Random
 from base64 import b64decode
 from scripts.chatbot import get_chat_response
-# Importing training.py here
-from scripts import training
 
 random_generator = Random.new().read
 key = RSA.generate(2048, random_generator)
@@ -20,12 +17,8 @@ private_random_generator = Random.new().read
 client_key = RSA.generate(2048,client_random_generator)
 private_key = client_key.exportKey()
 public_key = client_key.publickey().exportKey()
-
 app = Flask(__name__, template_folder="template")
 app.config['SECRET'] = "secret!123"
-
-# Read the PORT environment variable or default to port 3000
-
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 @socketio.on('message')
@@ -60,7 +53,8 @@ def handle_message(message):
         response = get_chat_response(decoded)
         botMessage = response
         emit("arby_answers", {"message": botMessage})
-
+    
+    
 @app.get("/")
 def index():
     print (public_key)
@@ -70,6 +64,5 @@ def index():
                            clientCrypto = Markup(public_key.decode("utf-8")))
 
 if __name__ == '__main__':
-    # Run the Flask app
-    training.train()
+    #socketio.run(app, host="localhost",debug=True)
     app.run()

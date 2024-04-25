@@ -1,8 +1,11 @@
-Flask
-Gunicorn
+# To ensure app dependencies are ported from your virtual environment/host machine into your container, run 'pip freeze > requirements.txt' in the terminal to overwrite this file
+flask==3.0.1
+gunicorn==21.2.0
 gevent
 rsa
 nltk
 tensorflow
 pycryptodome
 flask-socketio
+greenlet
+keras
