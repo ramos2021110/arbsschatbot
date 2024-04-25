@@ -97,9 +97,9 @@
     <script type="text/javascript">
       // import { homedisabler } from '../static/arbssjs.js';
       $(document).ready(function() {
-        var socket = io.connect("https://arbsschat.onrender.com/");
+        var socket = io.connect("https://arbsschat.onrender.com");
 
-socket.on('arby_answers', function(data) {
+    socket.on('message', function(data) {
     $('#user-input').append($('<p>').text(data.message))
 });
 
