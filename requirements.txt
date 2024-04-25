@@ -1,3 +1,7 @@
 Flask
 Gunicorn
 rsa
+nltk
+tensorflow
+pycryptodome
+flask-socketio
