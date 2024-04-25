@@ -63,7 +63,4 @@ def index():
                            clientCrypto=Markup(public_key.decode("utf-8")))
 
 if __name__ == '__main__':
-    # Get the port from the PORT environment variable provided by Render
-    port = int(os.environ.get("PORT", 5000))
-    # Run the Flask app with SocketIO support
-    socketio.run(app, host="0.0.0.0", port=port, debug=True)
+    app.run()
