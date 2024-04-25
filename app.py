@@ -66,4 +66,4 @@ def index():
                            clientCrypto = Markup(public_key.decode("utf-8")))
 
 if __name__ == '__main__':
-    socketio.run(app, host="localhost", port = 3000, debug=True)
+    socketio.run(app, host="54.254.162.138", port = 3000, debug=True)
