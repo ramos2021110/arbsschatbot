@@ -1,3 +1,4 @@
+import os
 import json
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
@@ -14,7 +15,7 @@ key = RSA.generate(2048, random_generator)
 crypto_key = key.public_key().export_key()
 client_random_generator = Random.new().read
 private_random_generator = Random.new().read
-client_key = RSA.generate(2048,client_random_generator)
+client_key = RSA.generate(2048, client_random_generator)
 private_key = client_key.exportKey()
 public_key = client_key.publickey().exportKey()
 app = Flask(__name__, template_folder="template")
@@ -52,21 +53,17 @@ def handle_message(message):
     except Exception as e:
         print("Decryption error:", e)
         # Handle the decryption error gracefully
-    
-    
-    
 
 @app.get("/")
 def index():
-    print (public_key)
-    print (private_key)
-    print ('Sending...')
+    print(public_key)
+    print(private_key)
+    print('Sending...')
     return render_template('arbsshtml.html', 
-                           clientCrypto = Markup(public_key.decode("utf-8")))
+                           clientCrypto=Markup(public_key.decode("utf-8")))
 
-# if __name__ == '__main__':
-#      #socketio.run(app, host="0.0.0.0", port = 5000, debug=True)
-#      socketio.run(app, host="localhost",debug=True)
-#      socketio.run(app, host="0.0.0.0",debug=True)
 if __name__ == '__main__':
-    socketio.run(app, host="0.0.0.0",debug=True)
+    # Get the port from the PORT environment variable provided by Render
+    port = int(os.environ.get("PORT", 5000))
+    # Run the Flask app with SocketIO support
+    socketio.run(app, host="0.0.0.0", port=port, debug=True)
