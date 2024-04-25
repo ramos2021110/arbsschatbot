@@ -97,12 +97,10 @@
     <script type="text/javascript">
       // import { homedisabler } from '../static/arbssjs.js';
       $(document).ready(function() {
-        var socket = io.connect("https://arbsschat.onrender.com:10000");
-        
-        //var socket = io.connect("http://localhost:5000");
-
+        var socket = io.connect("https://arbsschat.onrender.com");
+    
     socket.on('message', function(data) {
-    $('#user-input').append($('<p>').text(data.message))
+        $('#user-input').append($('<p>').text(data.message));
 });
 
 let pbkeys = document.getElementById('pbkeys').value;
