@@ -3,74 +3,74 @@ import json
 import pickle
 import numpy as np
 import os
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
-
-import nltk
 from nltk.stem import WordNetLemmatizer
-
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout, Input # Import Input layer
+from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 
-lemmatizer = WordNetLemmatizer()
+def train():
+    lemmatizer = WordNetLemmatizer()
 
-DIRNAME = os.path.dirname(os.path.abspath(__file__))
-intents = json.loads(open(os.path.join(DIRNAME, 'intents.json')).read())
+    # Load intents data
+    DIRNAME = os.path.dirname(os.path.abspath(__file__))
+    intents_path = os.path.join(DIRNAME, 'intents.json')
+    with open(intents_path) as file:
+        intents = json.load(file)
 
-words = []
-classes = []
-documents = []
-ignoreLetters = ['?', '!', '.', ',']
+    words = []
+    classes = []
+    documents = []
+    ignoreLetters = ['?', '!', '.', ',']
 
-for intent in intents['intents']:
-    for pattern in intent['patterns']:
-        wordList = nltk.word_tokenize(pattern)
-        words.extend(wordList)
-        documents.append((wordList, intent['tag']))
-        if intent['tag'] not in classes:
-            classes.append(intent['tag'])
+    # Preprocess intents data
+    for intent in intents['intents']:
+        for pattern in intent['patterns']:
+            wordList = nltk.word_tokenize(pattern)
+            words.extend(wordList)
+            documents.append((wordList, intent['tag']))
+            if intent['tag'] not in classes:
+                classes.append(intent['tag'])
 
-words = [lemmatizer.lemmatize(word.lower()) for word in words if word not in ignoreLetters]
-words = sorted(set(words))
+    words = [lemmatizer.lemmatize(word.lower()) for word in words if word not in ignoreLetters]
+    words = sorted(set(words))
+    classes = sorted(set(classes))
 
-classes = sorted(set(classes))
+    # Prepare training data
+    training = []
+    output_empty = [0] * len(classes)
 
-pickle.dump(words, open(os.path.join(DIRNAME, 'words.pkl'), 'wb'))
-pickle.dump(classes, open(os.path.join(DIRNAME, 'classes.pkl'), 'wb'))
+    for document in documents:
+        bag = []
+        word_patterns = document[0]
+        word_patterns = [lemmatizer.lemmatize(word.lower()) for word in word_patterns]
+        for word in words:
+            bag.append(1) if word in word_patterns else bag.append(0)
 
-training = []
-outputEmpty = [0] * len(classes)
+        output_row = list(output_empty)
+        output_row[classes.index(document[1])] = 1
+        training.append(bag + output_row)
 
-for document in documents:
-    bag = []
-    wordPatterns = document[0]
-    wordPatterns = [lemmatizer.lemmatize(word.lower()) for word in wordPatterns]
-    for word in words:
-        bag.append(1) if word in wordPatterns else bag.append(0)
+    np.random.shuffle(training)
+    training = np.array(training)
+    train_x = training[:, :len(words)]
+    train_y = training[:, len(words):]
 
-    outputRow = list(outputEmpty)
-    outputRow[classes.index(document[1])] = 1
-    training.append(bag + outputRow)
+    # Define the model
+    model = Sequential([
+        Dense(128, activation='relu'),
+        Dropout(0.5),
+        Dense(64, activation='relu'),
+        Dropout(0.5),
+        Dense(len(classes), activation='softmax')
+    ])
 
-random.shuffle(training)
-training = np.array(training)
+    # Compile the model
+    sgd = SGD(learning_rate=0.001, momentum=0.9, nesterov=True)
+    model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
-trainX = training[:, :len(words)]
-trainY = training[:, len(words):]
+    # Train the model
+    model.fit(train_x, train_y, epochs=1680, batch_size=5, verbose=1)
 
-# Define the model
-model = Sequential([
-    Input(shape=(len(trainX[0]),)), # Add Input layer with input_shape
-    Dense(128, activation='relu'),
-    Dropout(0.5),
-    Dense(64, activation='relu'),
-    Dropout(0.5),
-    Dense(len(trainY[0]), activation='softmax')
-])
-
-sgd = SGD(learning_rate=0.001, momentum=0.9, nesterov=True)
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-
-hist = model.fit(trainX, trainY, epochs=1680, batch_size=5, verbose=1)
-model.save(os.path.join(DIRNAME, 'chatbot_model.keras'), hist)
-print('Done')
+    # Save the model
+    model.save(os.path.join(DIRNAME, 'chatbot_model.keras'))
+    print('Done')
