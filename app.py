@@ -9,6 +9,8 @@ from Crypto.Hash import SHA256
 from Crypto import Random
 from base64 import b64decode
 from scripts.chatbot import get_chat_response
+# Importing training.py here
+from scripts import training
 
 random_generator = Random.new().read
 key = RSA.generate(2048, random_generator)
@@ -69,4 +71,5 @@ def index():
 
 if __name__ == '__main__':
     # Run the Flask app with SocketIO support
+    training.train()
     socketio.run(app)
