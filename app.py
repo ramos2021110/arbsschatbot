@@ -1,3 +1,4 @@
+import os
 import json
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
@@ -24,7 +25,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 @socketio.on('message')
 def handle_message(message):
     client_key_pv = RSA.importKey(private_key)
-    client_key_decrypter = PKCS1_OAEP.new(client_key_pv, hashAlgo=SHA256())
+    client_key_decrypter = PKCS1_OAEP.new(client_key_pv, hashAlgo=SHA256)
     
     try:
         json_dumped = json.dumps(message)
@@ -64,5 +65,8 @@ def index():
     return render_template('arbsshtml.html', 
                            clientCrypto = Markup(public_key.decode("utf-8")))
 
+# if __name__ == '__main__':
+#      #socketio.run(app, host="0.0.0.0", port = 5000, debug=True)
+#      socketio.run(app, host="localhost",debug=True)
 if __name__ == '__main__':
-     socketio.run(app, host="0.0.0.0", port = 5000, debug=True)
+    socketio.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
