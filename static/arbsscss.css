@@ -1,0 +1,588 @@
+/* html and whole div */
+
+
+html {
+
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    
+}
+
+.wholecontent{
+  margin-bottom: 500px;
+}
+
+/* head and body */
+
+body {
+
+  /* background-image: url(../Whoa/GIF/2.png); */
+
+    overflow-y: scroll  ;
+    overflow: auto;
+    padding-bottom: 20px;
+}
+body::-webkit-scrollbar {
+  width: 10px; /* Set the scrollbar width for WebKit-based browsers */
+}
+body::-webkit-scrollbar-thumb {
+  background: #ffffff; /* Set the scrollbar thumb color for WebKit-based browsers */
+  border-radius: 4px; /* Set the scrollbar thumb border radius for WebKit-based browsers */
+}
+body::-webkit-scrollbar-track {
+  background: #94949454;
+
+
+  border-radius: 10px; /* Set the scrollbar track color for WebKit-based browsers */
+}
+
+header {
+  text-align: center;
+}
+
+
+/* ceu logo css */
+
+.ceu-logo
+{
+  z-index: -1;
+  position: fixed;
+  width: 10%;
+  height: 20%;
+  opacity: 0.5;
+  bottom: 0;
+  left: 45%;
+  top: 35%;
+  background-image: url('../static/images/ceulogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* margin: auto; */
+}
+
+/* student pic css  */
+.scholarpic {
+  z-index: -1;
+  position: fixed;
+  width: 35%;
+  height: 40%;
+  opacity: 0.5;
+  bottom: 0;
+  left: 32%;
+  top: 78%;
+
+  background-image: url('../static/images/scholar1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* chatbox container */
+.chat-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding-bottom: 20px;
+  height: 70vh; /* Set the initial height to 70% of the viewport height */
+  max-height: 500px; /* Set a maximum height for larger screens */
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+.chat-box {
+  height: 75vh;
+  max-height: 550px;
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+  overflow: auto;
+
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: rgba(145, 145, 145, 0.25);
+  box-shadow: 0 0 40px #24242450;
+}
+@media (max-height: 100px) {
+  .chat-box {
+     max-height: 80px; /* Reduce max-height for smaller screens */
+     padding: 5px; /* Reduce padding for smaller screens */
+   }
+ }
+
+@media (max-height: 200px) {
+  .chat-box {
+     max-height: 100px; /* Reduce max-height for smaller screens */
+     padding: 5px; /* Reduce padding for smaller screens */
+   }
+ }
+
+/* Add media query for screens smaller than 600px */
+@media (max-height: 600px) {
+ .chat-box {
+    max-height: 200px; /* Reduce max-height for smaller screens */
+    padding: 5px; /* Reduce padding for smaller screens */
+  }
+}
+.chat-box::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: #94949454;
+
+  border-radius: 20px;
+}
+
+/* animation ni christian   */
+.moving-image {
+  width: 40px;
+  height: auto;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/*
+@keyframes neon {
+  from {
+    border-color: #00ffff; /*Default Color*/
+/*
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff,
+      0 0 80px #00ffff; /*shiming shimmering light yes*/
+      /*
+  }
+  to {
+    border-color: #ff00ff; /*Default Color*/
+    /*
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff,
+      0 0 80px #ff00ff; /*shiming shimmering light yes*/
+  /* }
+}  */
+
+
+
+/* user bubble message  */
+
+.user-message {
+  color: white;
+  /* font-size: 18px; */
+  background-color: #296ef0;
+  border-radius: 20px;
+  border: 2px solid #3798ff;
+  padding: 10px;
+  margin-bottom: 10px;
+  float: right;
+  clear: both;
+  display: inline-block;
+  max-width: 50%;
+  word-wrap: break-word;
+  animation-name: slideInUp;
+  animation-duration: 0.9s;
+  box-shadow: 0px 4px 7.5px 3px rgba(8, 22, 61, 0.25);
+}
+
+/* bot bubble message */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.bot-message {
+  color: white;
+  /* font-size: 20px; */
+  background-color: #3788b8;
+  border-radius: 20px;
+  border: 2px solid #52a5d4;
+  padding: 10px;
+  margin-bottom: 10px;
+  float: left;
+  clear: both;
+  display: inline-block;
+  max-width: 50%;
+  word-wrap: break-word;
+  animation-name: slideInUp;
+  animation-duration: 0.9s;
+  text-decoration: none;
+  box-shadow: 0px 4px 7.5px 3px rgba(38, 10, 61, 0.25);
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
+
+
+
+/* user chat section */
+
+.usersect{
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+.inputcss[type="text"] {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 200;
+  color: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: 3px solid #00000000;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
+  background: rgba(145, 145, 145, 0.25);
+  box-shadow: 0 0 40px #24242450;
+  float: right;
+}
+
+.inputcss[type="text"]:focus {
+  border-color: rgb(255, 255, 255);
+}
+
+.inputcss::placeholder {
+  color: white;
+}
+
+
+/* home buttom */
+.home-button {
+  background-size: cover; /* Set the background image to cover the button */
+  background-position: center; /* Center the background image */
+  margin-right: 10px;
+  margin-left: 10px; /* adjust this to your needs */
+  border: 2px solid rgb(174, 247, 242);
+  background-color: rgba(78, 194, 187,  0.5);
+  cursor: pointer;
+  border-radius: 15px;
+  -webkit-transition: all 0.5s;
+
+}
+.home-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(53, 53, 53, 0.5);
+}
+
+.home-button:active {
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  transform: scale(0.9);
+
+}
+
+
+/* button css */
+
+
+button {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 100px;
+  border: 2px solid white;
+  background: rgba(219, 112, 147, 0.5);
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  cursor: pointer;
+  /* font-size: 20px; */
+
+  background-size: cover; /* Set the background image to cover the button */
+  background-position: center; /* Center the background image */
+}
+
+
+.button-container {
+  text-align: center;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.button-container button {
+  margin: 2px;
+  border-radius: 100px;
+}
+
+.button-container button:hover {
+  background-color: rgb(255, 192, 203);
+  box-shadow: 0 0 20px rgba(53, 53, 53, 0.466);
+  transform: scale(1.05);
+}
+
+.button-container button:active {
+  background-color: #3d94cf;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+
+/* animation slide up */
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+:root {
+  --logo-size: 60px; /* Default size */
+}
+
+/* title */
+.hometitle {
+  margin-top: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* adjust this to your needs */
+}
+
+.fontsizecss{
+
+  -webkit-transition: all 0.5s;
+  cursor: pointer;
+  /* border: 2px solid white; */
+
+}
+
+.fontsizecss:hover {
+  /* box-shadow: 0 0 20px rgba(53, 53, 53, 0.466); */
+  transform: scale(1.2);
+}
+
+.fontsizecss:active {
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+
+
+
+
+.arbss-container {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+
+.arbss {
+  font-size: 30px;
+  font-weight: 400;
+  vertical-align: middle;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+
+}
+
+
+/*arbss logo*/
+.arbsimgcss {
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+}
+
+.arbss-logo {
+  content: "";
+  position: absolute;
+  width: calc(var(--logo-size) / 3);
+  height: calc(var(--logo-size) / 3);
+  background: #296ef0;
+  border-radius: 50%;
+  top: 50%;
+  left: -10px;
+  transform: translate(-50%, -50%);
+}
+
+.arbss-logo::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--logo-size) / 2);
+  height: calc(var(--logo-size) / 2);
+  border: calc(var(--logo-size) / 15) solid transparent;
+  border-top-color: #c271ff;
+  border-bottom-color: #a125ff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation: rotateLines 4s linear infinite;
+}
+
+
+/* .logo-container {
+  position: relative;
+  display: inline-block;
+} */
+
+/*bottom section*/
+.bottomsect{
+  text-align: center;
+}
+
+.wordcntcss{
+  float: middle; 
+  color: white;
+  font-size: 12px;
+    font-weight: 400;
+}
+
+.betacss{
+  float: left;
+  color: white;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.feedbackcss {
+  margin-bottom: 20px;
+  margin-right: 20px;
+  font-size: 22px;
+  font-weight: 400;
+  float: right;
+  color: white;
+  text-decoration: none;
+}
+.feedbackcss:visited {
+  color: white;
+}
+.feedbackcss:hover {
+  color:rgb(250, 95, 237);
+  text-decoration:none;
+  cursor:pointer;
+}
+
+
+
+@keyframes rotateLines {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+
+/* dark mode css */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+/* .testtt{
+  background: linear-gradient(
+    200deg,
+    rgba(255, 192, 203) 40%,
+    rgba(173, 216, 230) 80%
+  )
+  center center fixed;
+} */
+
+body {
+  /* background: white; */
+  background: linear-gradient(
+    200deg,
+    rgba(255, 192, 203) 40%,
+    rgba(173, 216, 230) 80%
+  )
+  center center fixed;
+  transition: background .2s ease;
+  z-index: 1;
+}
+
+body.dark {
+  z-index: 2;
+  /* background: black; */
+  background: linear-gradient(
+      200deg,
+      rgba(161, 25, 155) 40%,
+      rgba(22, 14, 126) 80%
+    ) 
+     center center fixed;
+}
+
+
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: #111;
+  width: 60px;
+  height: 20px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.mooncss {
+  font-size: 20px;
+  padding-bottom: 3px;
+  color: #f1c40f;
+}
+
+.suncss {
+  font-size: 20px;
+  padding-right: 20px;
+  padding-bottom: 3px;
+  color: #f39c12;
+}
+
+.checkbox-label .ball {
+  background-color: #fff;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(41px);
+}
+
+/* .darkmodecss{
+  margin-left: 80px;
+  color: white;
+  font-size: 18px;
+  text-align: justify;
+} */
+
+
+.right-button {
+  position: absolute;
+  right: 0;
+  top: 5%;
+}
