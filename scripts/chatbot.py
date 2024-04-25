@@ -15,9 +15,15 @@ from keras.models import load_model
 
 
 lemmatizer = WordNetLemmatizer()
-#load the intents json file
-DIRNAME = '\\'.join(os.path.dirname(__file__).split("/"))
-intents = json.loads(open(os.path.join(DIRNAME, 'intents.json')).read())
+# Get the directory of the current script
+DIRNAME = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the file path to intents.json inside the scripts folder
+intents_file_path = os.path.join(DIRNAME,  'intents.json')
+
+# Load the intents json file
+with open(intents_file_path, 'r') as file:
+    intents = json.load(file)
 
 #open the words and classes pkl files created from training.py
 words = pickle.load(open(os.path.join(DIRNAME, 'words.pkl'), 'rb'))
