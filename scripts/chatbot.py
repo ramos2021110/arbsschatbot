@@ -12,6 +12,9 @@ from nltk.stem import WordNetLemmatizer
 
 from keras.models import load_model
 
+# Download NLTK data
+nltk.download('punkt')
+nltk.download('wordnet')
 
 
 lemmatizer = WordNetLemmatizer()
