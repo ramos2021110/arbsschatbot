@@ -103,7 +103,7 @@
     <script type="text/javascript">
       // import { homedisabler } from '../static/arbssjs.js';
       $(document).ready(function() {
-          var socket = io.connect("http://localhost:5000");
+          var socket = io.connect("54.254.162.138");
 
           socket.on('message', function(data) {
               $('#user-input').append($('<p>').text(data))
