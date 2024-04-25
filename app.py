@@ -63,4 +63,5 @@ def index():
                            clientCrypto=Markup(public_key.decode("utf-8")))
 
 if __name__ == '__main__':
-    app.run()
+    # Run the Flask app with SocketIO support
+    socketio.run(app, host="0.0.0.0", debug=True)
