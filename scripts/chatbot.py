@@ -14,6 +14,8 @@ from keras.models import load_model
 
 
 nltk.download('punkt')
+nltk.download('wordnet')
+
 lemmatizer = WordNetLemmatizer()
 #load the intents json file
 DIRNAME = '\\'.join(os.path.dirname(__file__).split("\\"))
