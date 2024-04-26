@@ -55,6 +55,8 @@ def handle_message(message):
         emit("arby_answers", {"message": botMessage})
     
     
+    
+
 @app.get("/")
 def index():
     print (public_key)
@@ -64,5 +66,4 @@ def index():
                            clientCrypto = Markup(public_key.decode("utf-8")))
 
 if __name__ == '__main__':
-    #socketio.run(app, host="localhost",debug=True)
-    app.run()
+    socketio.run(app, host="0.0.0.0",debug=True)
