@@ -13,7 +13,7 @@ from nltk.stem import WordNetLemmatizer
 from keras.models import load_model
 
 
-
+nltk.download('punkt')
 lemmatizer = WordNetLemmatizer()
 #load the intents json file
 DIRNAME = '\\'.join(os.path.dirname(__file__).split("\\"))
