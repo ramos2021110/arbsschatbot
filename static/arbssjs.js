@@ -1,5 +1,83 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+  //help button
+  let helpbuttonid = this.getElementById("helpbuttonid");
+  let helpbutton = document.createElement("button");
+  helpbutton.innerHTML = "<img src='../static/images/icon_pics/faq.png' style=' width:30px; height:30px;'>";
+  helpbutton.classList.add("helpbuttoncss");
+  helpbutton.style.border = 'none';
+  helpbutton.style.background = 'none'
+  helpbutton.style.boxShadow = 'none'
+  helpbuttonid.appendChild(helpbutton);
+  const imagePanel = document.getElementById("image-panel");
+  const imagePanelImg = document.getElementById("image-panel-img");
+  const closeButton = document.getElementById("close-button");
+  
+  // Set initial position of the image panel
+  let posX = 0;
+  let posY = 0;
+
+  // Set a flag indicating whether the user is dragging the image
+  let isDragging = false;
+
+  helpbutton.addEventListener("click", function() {
+    usersfx();
+    
+    imagePanel.style.display = "block";
+    imagePanelImg.src = "../static/images/helpimage.png  "; /* replace with the URL of the image you want to display */
+  });
+  
+  // Select the image panel element
+  const imagePanelCss = document.querySelector('.image-panel-css');
+
+  imagePanelCss.addEventListener('mousedown', (event) => {
+    // Set the flag to true
+    isDragging = true;
+  
+    // Set the initial position of the image panel
+    posX = event.clientX - imagePanelCss.offsetLeft;
+    posY = event.clientY - imagePanelCss.offsetTop;
+  });
+
+  window.addEventListener('mousemove', (event) => {
+    // If the user is not dragging, do nothing
+    if (!isDragging) return;
+ 
+    // Calculate the new position of the image panel
+    const newX = event.clientX - posX;
+    const newY = event.clientY - posY;
+  
+    // Set the new position of the image panel
+    imagePanelCss.style.left = newX + 'px';
+    imagePanelCss.style.top = newY + 'px';
+  });
+
+  window.addEventListener('mouseup', () => {
+    // Set the flag to false
+    isDragging = false;
+  });
+
+  // Add a mouse wheel event listener to the image panel
+  imagePanelCss.addEventListener('wheel', (event) => {
+    // Prevent the page from scrolling
+    event.preventDefault();
+
+    // Get the current scale value
+    const currentScale = parseFloat(window.getComputedStyle(imagePanelCss).transform.split('(')[1].split(')')[0]);
+
+    // Calculate the new scale value based on the wheel delta
+    const newScale = event.deltaY < 0? currentScale * 1.1 : currentScale / 1.1;
+
+    // Set the new scale value
+    imagePanelCss.style.transform = `translate(-50%, -50%) scale(${newScale})`;
+  });
+
+  closeButton.addEventListener("click", function() {
+    usersfx();
+
+    imagePanel.style.display = "none";
+  });
+
   let fontSizeDefault = 20
   let chatbotfont = document.getElementsByClassName("bot-message");
   let chatuserfont = document.getElementsByClassName("user-message");
@@ -15,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //increase font
   let fontincreaseid = this.getElementById("fontEnlarge-button");
   let fontincreaseicon = document.createElement("button");
-  fontincreaseicon.innerHTML = "<img src='../static/images/fontUp.png' style=' width:32px; height:32px;'>";
+  fontincreaseicon.innerHTML = "<img src='static/images/fontUp.png' style=' width:32px; height:32px;'>";
   fontincreaseicon.classList.add("magnifyingcss");
   fontincreaseicon.style.border = 'none';
   fontincreaseicon.style.padding = '5px'
@@ -69,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //decrease font
   let fontdecreaseid = this.getElementById("fontSmaller-button");
   let fontdecreaseicon = document.createElement("button");
-  fontdecreaseicon.innerHTML = "<img src='../static/images/fontDown.png' style=' width:25px; height:25px;'>";
+  fontdecreaseicon.innerHTML = "<img src='static/images/fontDown.png' style=' width:25px; height:25px;'>";
   fontdecreaseicon.classList.add("magnifyingcss");
   fontdecreaseicon.style.border = 'none';
   fontdecreaseicon.style.padding = '5px'
@@ -121,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //add mainmenu button
   let a = this.getElementById("home-button");
   let mainmenu = document.createElement("button");
-  mainmenu.innerHTML = "<img src='../static/images/newhome.png' style=' width:30px; height:30px;'> Home";
+  mainmenu.innerHTML = "<img src='static/images/newhome.png' style=' width:30px; height:30px;'> Home";
   mainmenu.classList.add("mainmenu");
   mainmenu.style.border = 'none';
   // mainmenu.style.border = '2px solid white';
@@ -154,7 +232,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //home category buttons
   function test(){
     botsfx();
-    homedisabler();
     removeCourseButtons();
     removeAdmissionButtons();
 
@@ -163,13 +240,13 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Type here any suggestions for any type of Buttons
     var buttons = [
-      { text: "Courses", action: showCourses, pic: '../static/images/icon_pics/course.png' },
-      { text: "Admissions", action: showAdmissions, pic: '../static/images/icon_pics/admission.png'},
-      { text: "Schedules", action: showSchedules, pic: '../static/images/icon_pics/sched.png' },
-      { text: "Events", action: showEvents, pic: '../static/images/icon_pics/event.png' },
-      { text: "Faculty", action: showFaculty, pic: '../static/images/icon_pics/faculty.png' },
-      { text: "Location", action: showLocation, pic: '../static/images/icon_pics/location.png' },
-      { text: "About Us", action: showAboutUs, pic: '../static/images/icon_pics/about.png' },
+      { text: "Courses", action: showCourses, pic: 'static/images/icon_pics/course.png' },
+      { text: "Admissions", action: showAdmissions, pic: 'static/images/icon_pics/admission.png'},
+      { text: "Schedules", action: showSchedules, pic: 'static/images/icon_pics/sched.png' },
+      { text: "Events", action: showEvents, pic: 'static/images/icon_pics/event.png' },
+      { text: "Faculty", action: showFaculty, pic: 'static/images/icon_pics/faculty.png' },
+      { text: "Location", action: showLocation, pic: 'static/images/icon_pics/location.png' },
+      { text: "About Us", action: showAboutUs, pic: 'static/images/icon_pics/about.png' },
     ];
   
     // Append buttons to container
@@ -184,12 +261,16 @@ document.addEventListener("DOMContentLoaded", function () {
       if(button.text==="Courses" || button.text==="Admissions" || button.text==="Location" || button.text==="Faculty") {
         console.log("Went into courses/admissions/location");
         buttonElement.addEventListener("click", function() {
-          sendMessageButton(button.text); // Send the button text as a user message
+          sendMessageButton("Show me the  " + button.text); // Send the button text as a user message
           button.action(); // Call the button's action function
       });
       } else {
         // buttonElement.textContent = button.text;
-        homedisabler();
+        if (mainmenu.disabled)
+        {
+          homedisabler();
+
+        }
         buttonElement.setAttribute("id", "button-input");
         buttonElement.addEventListener("click", function() {
           sendMessageButton(button.text); // Send the button text as a user message
@@ -224,8 +305,12 @@ document.addEventListener("DOMContentLoaded", function () {
   homedisabler();
 
   function showCourses() {
-    homedisabler();
-    botsfx()
+    botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px'
@@ -320,9 +405,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // botMessage.innerText =
     //   "ARBSS: We offer a diverse range of courses across different disciplines. You can explore our course catalog on the website or connect with our academic advisors for personalized guidance based on your interests.";
     // chatBox.appendChild(botMessage);
+ 
+    removeCourseListButtons();
+ 
     removeCoursesList();
+ 
     showCourses();
-    removeButtons();
+  }
+
+  function returnSpeCourseButt() {
+    botsfx();
+    //var chatBox = document.getElementById("chat-box");
+    // var botMessage = document.createElement("div");
+    // botMessage.classList.add("bot-message");
+    // botMessage.innerText =
+    //   "ARBSS: We offer a diverse range of courses across different disciplines. You can explore our course catalog on the website or connect with our academic advisors for personalized guidance based on your interests.";
+    // chatBox.appendChild(botMessage);
+    removeSpeCourseButtons();
+    showCourse1();
   }
 
   function returnToMainAdmissions() {
@@ -353,6 +453,9 @@ document.addEventListener("DOMContentLoaded", function () {
     botsfx();
     // var chatBox = document.getElementById("chat-box");
     //showCourses(); // not working
+    
+    homedisabler();
+
     console.log("showcourse1")
     coursesList();
     chatBox.scrollTop = chatBox.scrollHeight;
@@ -422,8 +525,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showAMD() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -445,7 +552,11 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -495,8 +606,12 @@ document.addEventListener("DOMContentLoaded", function () {
   } 
 
   function showCSIT() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -514,7 +629,11 @@ document.addEventListener("DOMContentLoaded", function () {
          //action: showCourse2 
       },
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -555,13 +674,17 @@ document.addEventListener("DOMContentLoaded", function () {
   } 
 
   function showDD() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
     botMessage.classList.add("bot-message");
-    botMessage.innerText = "ARBSS: Here are the available courses under the DD department.";
+    botMessage.innerText = "ARBSS: Here are the available courses under the Dentistry department.";
     chatBox.appendChild(botMessage);
     chatBox.scrollTop = chatBox.scrollHeight;
     var courseButtons = [
@@ -570,11 +693,15 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse1, 
       },
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Add new course CEU Pwease",
         //action: showCourse1, 
       },
       {
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -608,8 +735,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showHM() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -627,7 +758,11 @@ document.addEventListener("DOMContentLoaded", function () {
          //action: showCourse2 
       },
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -668,8 +803,12 @@ document.addEventListener("DOMContentLoaded", function () {
   } 
 
   function showMT() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -683,7 +822,11 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse1, 
       },
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -717,8 +860,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showND() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -732,11 +879,15 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse1, 
       }, 
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Open New Nursing Course pwease",
         //action: showCourse1, 
       },
       {
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -770,8 +921,12 @@ document.addEventListener("DOMContentLoaded", function () {
   } 
 
   function showPD() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -785,11 +940,15 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse1, 
       },
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "BS pa check up si pres",
         //action: showCourse1, 
       }, 
       {
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -823,8 +982,12 @@ document.addEventListener("DOMContentLoaded", function () {
   } 
 
   function showPSD() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -838,7 +1001,11 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse1, 
       }, 
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -872,8 +1039,12 @@ document.addEventListener("DOMContentLoaded", function () {
   } 
 
   function showTM() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -887,7 +1058,11 @@ document.addEventListener("DOMContentLoaded", function () {
         //action: showCourse1, 
       }, 
       {
+ 
+        text: "Return", action: returnSpeCourseButt,
+ 
         text: "Return", action: returntoCourseLists,
+ 
       }
     ];
 
@@ -921,7 +1096,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showCourse2() {
-    botsfx()
+    botsfx();
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -936,7 +1111,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   function showCourse3() {
-    botsfx()
+    botsfx();
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -958,10 +1133,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function removeCourseListButtons() {
+    botsfx()
+    var courseButtons = document.querySelectorAll(".course-buttons");
+    courseButtons.forEach(function (button) {
+      button.parentNode.removeChild(button);
+    });
+  }
+
+  function removeSpeCourseButtons() {
+    botsfx()
+    var courseButtons = document.querySelectorAll(".course-buttons");
+    courseButtons.forEach(function (button) {
+      button.parentNode.removeChild(button);
+    });
+  }
 
   function showAdmissions() {
     botsfx();
-    homedisabler();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
   
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
@@ -992,18 +1186,18 @@ document.addEventListener("DOMContentLoaded", function () {
     admissionButtons.forEach(function (buttonData) {
       var button = document.createElement("button");
       button.style.fontSize = fontSizeDefault + 'px';
-      if(buttonData.text==="Return" || buttonData.text==="Admission Requirements") {
+      if(buttonData.text==="Return") {
         console.log("Went into return or admissions req");
         button.textContent = buttonData.text;
         button.addEventListener("click", buttonData.action);
       } 
       else {
         button.textContent = buttonData.text;
-        button.setAttribute("id", "button-input");
+        //button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
           sendMessageButton(buttonData.text);
            // Send the button text as a user message
-          // buttonData.action(); // Call the button's action function
+          buttonData.action(); // Call the button's action function
         });
       }
     
@@ -1028,114 +1222,105 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //Admission-related questions
   function showAdmission1() {
-    homedisabler();
     botsfx();
     removeAdmissionButtons();
-
-    var buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("button-container");
-  
-    // Type here any suggestions for any type of Buttons
-    var buttons = [
+    if (mainmenu.disabled)
       {
-        text: "Freshman Apply Now",
+        homedisabler();
+
+      }
+    var chatBox = document.getElementById("chat-box");
+    var botMessage = document.createElement("div");
+    botMessage.style.fontSize = fontSizeDefault + 'px';
+    botMessage.classList.add("bot-message");
+    botMessage.innerText = "ARBSS: Here are the options for Admission Types.";
+    chatBox.appendChild(botMessage);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    var courseButtons = [
+      {
+        text: "Freshman",
+        //action: showCourse1, 
+      }, 
+      {
+        text: "Transferee",
         //action: showCourse1, 
       },
-      { 
-        text: "Transferee",
-          //action: showCourse2 
-      },
       {
-        text: "Return", action: returnToMainAdmissions,
+ 
+        text: "Return", action: returnAdmissionsButt,
       }
     ];
-  
-    // Append buttons to container
-    buttons.forEach(function (button) {
-      var buttonElement = document.createElement("button");
-      buttonElement.style.fontSize = fontSizeDefault + 'px';
-      
-      buttonElement.innerHTML = "<img src='" + button.pic + "' style='width:30px; height:30px; margin-right:2px;'> " + button.text ;
-      // buttonElement.innerHTML = "<img src='scholar1.png' alt='Course Image' style='width:20px; height:20px; margin-right:5px;'>";
-      // buttonElement.innerHTML = "<img src='pic' style='width:20px; height:20px; margin-right:5px;'>";
-  
-      if(button.text==="Return") {
-        console.log("Went into courses/admissions/location");
-        buttonElement.addEventListener("click", function() {
-          sendMessageButton(button.text); // Send the button text as a user message
-          button.action(); // Call the button's action function
-      });
-      } else {
-        // buttonElement.textContent = button.text;
-        homedisabler();
-        buttonElement.setAttribute("id", "button-input");
-        buttonElement.addEventListener("click", function() {
-          sendMessageButton(button.text); // Send the button text as a user message
-          // buttonData.action(); // Call the button's action function
-      });
-        // sendMessageButton(button.text);
+
+    // Create and append course query buttons
+    var courseButtonContainer = document.createElement("div");
+    courseButtonContainer.classList.add("button-container", "course-buttons");
+    courseButtons.forEach(function (buttonData) {
+      var button = document.createElement("button");
+      button.style.fontSize = fontSizeDefault + 'px';
+      if(buttonData.text==="Return") {
+        console.log("Went into equals courses");
+        button.textContent = buttonData.text;
+        button.addEventListener("click", buttonData.action);
+      } 
+      else {
+        button.textContent = buttonData.text;
+        button.setAttribute("id", "button-input");
+        button.addEventListener("click", function() {
+          sendMessageButton("Showing the " + buttonData.text + " Requirements");
+          //buttonData.action();
+          // Send the button text as a user message}
+        });
       }
-
-      //buttonElement.addEventListener("click", button.action);
-      buttonContainer.appendChild(buttonElement);
-    });
+      courseButtonContainer.appendChild(button);
+    })
   
-    // Append buttons container to chat box
-    chatBox.appendChild(buttonContainer);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // var chatBox = document.getElementById("chat-box");
-    // var botMessage = document.createElement("div");
-    // botMessage.style.fontSize = fontSizeDefault + 'px';
-    // botMessage.classList.add("bot-message");
-    // botMessage.innerText = "ARBSS: Choose from the following options: ";
-    // chatBox.appendChild(botMessage);
-    // // chatBox.scrollTop = chatBox.scrollHeight;
-    // var admissionReqtsButtons = [
-    //   {
-    //     text: "Freshman",
-    //     //action: showCourse1, 
-    //   },
-    //   { 
-    //     text: "Transferee",
-    //      //action: showCourse2 
-    //   },
-    //   {
-    //     text: "Return", action: ReturnButt,
-    //   }
-    // ];
-
-    // // Create and append course query buttons
-    // var courseButtonContainer = document.createElement("div");
-    // courseButtonContainer.classList.add("button-container", "course-buttons");
-    // admissionReqtsButtons.forEach(function (buttonData) {
-    //   var button = document.createElement("button");
-    //   button.style.fontSize = fontSizeDefault + 'px';
-    //   if(buttonData.text==="Return") {
-    //     console.log("Went into equals courses");
-    //     button.textContent = buttonData.text;
-    //     button.addEventListener("click", buttonData.action);
-    //   } 
-    //   else {
-    //     button.textContent = buttonData.text;
-    //     button.setAttribute("id", "button-input");
-    //     button.addEventListener("click", function() {
-    //       sendMessageButton(buttonData.text + " Admission Requirements");
-    //        // Send the button text as a user message
+    // // Append buttons to container
+    // buttons.forEach(function (button) {
+    //   var buttonElement = document.createElement("button");
+    //   buttonElement.style.fontSize = fontSizeDefault + 'px';
+      
+    //   buttonElement.innerHTML = "<img src='" + button.pic + "' style='width:30px; height:30px; margin-right:2px;'> " + button.text ;
+    //   // buttonElement.innerHTML = "<img src='scholar1.png' alt='Course Image' style='width:20px; height:20px; margin-right:5px;'>";
+    //   // buttonElement.innerHTML = "<img src='pic' style='width:20px; height:20px; margin-right:5px;'>";
+  
+    //   if(button.text==="Return") {
+    //     console.log("Went into courses/admissions/location");
+    //     buttonElement.addEventListener("click", function() {
+    //       sendMessageButton(button.text); // Send the button text as a user message
+    //       button.action(); // Call the button's action function
+    //     });
+    //   } else {
+    //     // buttonElement.textContent = button.text;
+    //     homedisabler();
+    //     buttonElement.setAttribute("id", "button-input");
+    //     buttonElement.addEventListener("click", function() {
+    //       sendMessageButton(button.text); // Send the button text as a user message
+ 
     //       // buttonData.action(); // Call the button's action function
     //     });
     //   }
     //   courseButtonContainer.appendChild(button);
     // });
-    // chatBox.appendChild(courseButtonContainer);
-    // chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.appendChild(courseButtonContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
+  function returnAdmissionsButt() {
+    botsfx();
+    //var chatBox = document.getElementById("chat-box");
+    // var botMessage = document.createElement("div");
+    // botMessage.classList.add("bot-message");
+    // botMessage.innerText =
+    //   "ARBSS: We offer a diverse range of courses across different disciplines. You can explore our course catalog on the website or connect with our academic advisors for personalized guidance based on your interests.";
+    // chatBox.appendChild(botMessage);
+    removeAdmissionTypeButtons();
+    showAdmissions();
+  }
 
-  function removeAdmissionButtons() {
-    botsfx()
+  function removeAdmissionTypeButtons() {
+    botsfx();
 
-    var admissionButtons = document.querySelectorAll(".admission-buttons");
+    var admissionButtons = document.querySelectorAll(".course-buttons");
     admissionButtons.forEach(function (button) {
       button.parentNode.removeChild(button);
     });
@@ -1242,21 +1427,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   function showSchedules() {
-
     botsfx(); 
-    
+    console.log("went to sched");
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
     botMessage.classList.add("bot-message");
     botMessage.innerText =
       "ARBSS: Here are the schedules for the upcoming semester...";
-    chatBox.appendChild(botMessage);
+    chatBox.appendChild("Show " + botMessage);
     chatBox.scrollTop = chatBox.scrollHeight;
     removeButtons();
-
-    test();
-
   }
 
 
@@ -1276,8 +1457,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   function showFacultyAMD() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1287,19 +1472,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyAMDButtons = [
       {
-        text: "Permanent",
+        text: "Permanent AMD Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term AMD Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer AMD Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1322,7 +1511,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " AMD Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1334,8 +1523,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyCSIT() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div"); 
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1345,19 +1538,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyCSITButtons = [
       {
-        text: "Permanent",
+        text: "Permanent CSIT Faculties",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term CSIT Faculties",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer CSIT Faculties",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1380,7 +1577,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " CSIT Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1392,8 +1589,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyDentistry() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1403,19 +1604,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyDentButtons = [
       {
-        text: "Permanent",
+        text: "Permanent Dentistry Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term Dentistry Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer Dentistry Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1438,7 +1643,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " Dentistry Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1450,8 +1655,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyHM() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1461,19 +1670,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyHMButtons = [
       {
-        text: "Permanent",
+        text: "Permanent HM Faculty Members ",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term HM Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer HM Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1496,7 +1709,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " HM Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1508,8 +1721,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyMedtech() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1519,19 +1736,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyMTButtons = [
       {
-        text: "Permanent",
+        text: "Permanent MedTech Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term MedTech Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer MedTech Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1554,7 +1775,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " MedTech Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1566,8 +1787,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyNursing() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1577,19 +1802,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyNursingButtons = [
       {
-        text: "Permanent",
+        text: "Permanent Nursing Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term Nursing Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer Nursing Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1612,7 +1841,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " Nursing Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1624,8 +1853,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyPharma() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1635,19 +1868,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyPharmaButtons = [
       {
-        text: "Permanent",
+        text: "Permanent Pharmacy Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term Pharmacy Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer Pharmacy Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1670,7 +1907,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " Pharmacy Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1682,8 +1919,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyPsych() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1693,19 +1934,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyPsychButtons = [
       {
-        text: "Permanent",
+        text: "Permanent Psychology Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term Psychology Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer Psychology Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1728,7 +1973,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " Psychology Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
           // buttonData.action(); // Call the button's action function
         });
@@ -1740,8 +1985,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFacultyTourism() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1751,19 +2000,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // chatBox.scrollTop = chatBox.scrollHeight;
     var facultyTourismButtons = [
       {
-        text: "Permanent",
+        text: "Permanent Tourism Faculty Members",
         //action: showCourse1, 
       },
       { 
-        text: "Fixed Term",
+        text: "Fixed Term Tourism Faculty Members",
          //action: showCourse2 
       },
       {
-        text: "Lecturer",
+        text: "Lecturer Tourism Faculty Members",
         //action: showCourse3,
       },
       {
+ 
+        text: "Return", action: returnFacultyButt,
+ 
         text: "Return", action: returnToMainFaculty,
+ 
       }
     ];
 
@@ -1786,9 +2039,9 @@ document.addEventListener("DOMContentLoaded", function () {
         button.textContent = buttonData.text;
         button.setAttribute("id", "button-input");
         button.addEventListener("click", function() {
-          sendMessageButton(buttonData.text + " Tourism Faculty Members");
+          sendMessageButton(buttonData.text);
            // Send the button text as a user message
-          // buttonData.action(); // Call the button's action function
+          //buttonData.action(); // Call the 's action function
         });
       }
       facultyTourismButtonContainer.appendChild(button);
@@ -1799,8 +2052,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showFaculty() {
     removeButtons();
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box"); 
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1856,7 +2113,7 @@ document.addEventListener("DOMContentLoaded", function () {
       else {
         button.textContent = buttonData.text;
         button.addEventListener("click", function() {
-         sendMessageButton(buttonData.text);
+         sendMessageButton("Show me the " + buttonData.text);
          buttonData.action();
        });
       }
@@ -1866,10 +2123,33 @@ document.addEventListener("DOMContentLoaded", function () {
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 
+  function returnFacultyButt() {
+    botsfx();
+    //var chatBox = document.getElementById("chat-box");
+    // var botMessage = document.createElement("div");
+    // botMessage.classList.add("bot-message");
+    // botMessage.innerText =
+    //   "ARBSS: We offer a diverse range of courses across different disciplines. You can explore our course catalog on the website or connect with our academic advisors for personalized guidance based on your interests.";
+    // chatBox.appendChild(botMessage);
+    removeTypeFactButtons();
+    showFaculty();
+  }
+
+  function removeTypeFactButtons() {
+    botsfx()
+    var courseButtons = document.querySelectorAll(".course-buttons");
+    courseButtons.forEach(function (button) {
+      button.parentNode.removeChild(button);
+    });
+  }
 
   function showLocation() {
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1878,10 +2158,10 @@ document.addEventListener("DOMContentLoaded", function () {
     chatBox.appendChild(botMessage);
     var courseButtons = [
       {
-        text: "Gil Puyat Campus", action: showGP, 
+        text: "CEU - Gil Puyat Campus", action: showGP, 
       },
       { 
-        text: "Legazpi Village Campus", action: showLV, 
+        text: "CEU - Legazpi Village Campus", action: showLV, 
       },
       {
         text: "Return", action: ReturnButt,
@@ -1903,13 +2183,38 @@ document.addEventListener("DOMContentLoaded", function () {
       courseButtonContainer.appendChild(button);
     });
     chatBox.appendChild(courseButtonContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
     removeButtons();
+  } 
+
+  function returnLocButt() {
+    botsfx();
+    //var chatBox = document.getElementById("chat-box");
+    // var botMessage = document.createElement("div");
+    // botMessage.classList.add("bot-message");
+    // botMessage.innerText =
+    //   "ARBSS: We offer a diverse range of courses across different disciplines. You can explore our course catalog on the website or connect with our academic advisors for personalized guidance based on your interests.";
+    // chatBox.appendChild(botMessage);
+    removeFloorButtons();
+    showLocation();
+  }
+
+  function removeFloorButtons() {
+    botsfx()
+    var courseButtons = document.querySelectorAll(".course-buttons");
+    courseButtons.forEach(function (button) {
+      button.parentNode.removeChild(button);
+    });
   }
 
   function showGP() {
     removeCourseButtons();
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box"); 
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -1946,7 +2251,11 @@ document.addEventListener("DOMContentLoaded", function () {
         text: "GP Ninth Floor", //action: showPSD,
       },
       {
+ 
+        text: "Return", action: returnLocButt,
+ 
         text: "Return", action: returnToMainLocations,
+ 
       }
     ];
 
@@ -1981,8 +2290,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showLV() {
     removeCourseButtons();
-    homedisabler();
     botsfx();
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box"); 
     var botMessage = document.createElement("div");
     botMessage.style.fontSize = fontSizeDefault + 'px';
@@ -2034,7 +2347,11 @@ document.addEventListener("DOMContentLoaded", function () {
         text: "LV Fifteenth Floor", //action: showPSD,
       },
       {
+ 
+        text: "Return", action: returnLocButt,
+ 
         text: "Return", action: returnToMainLocations,
+ 
       }
     ];
 
@@ -2141,6 +2458,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function sendMessageButton(buttonText) {
     // arbsstalk();
 
+    if (mainmenu.disabled)
+      {
+        homedisabler();
+
+      }
     var chatBox = document.getElementById("chat-box");
     var userMessage = document.createElement("div");
     userMessage.style.fontSize = fontSizeDefault + 'px';
